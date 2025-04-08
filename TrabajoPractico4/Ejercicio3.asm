@@ -24,15 +24,18 @@ main:
     li s3, 0            # s3 = contador (inicializado a 0)
     li t0, 0            # t0 = índice (i)
 
+#Bucle principal ---------------------------------------------------------------------------
+
 loop:
     # Verificar si hemos procesado los 10 elementos
     li t1, 10
     bge t0, t1, end_loop  # CORRECCIÓN: Comparación correcta (t0 >= t1)
-
+#------
     # Cargar elemento actual de TABLA
-    slli t2, t0, 2      		# Convertir índice a offset (i × 4)
+    #obtiene el indice. Despues con el indice obtiene el elemento del arreglo. Y despues lo guarda directamente t4
+    slli t2, t0, 2      		# Convertir índice a offset (i × 4), el offset se usa para acceder a un elemento particular del arreglo.
     add t3, s0, t2      		# Dirección de TABLA[i]
-    lw t4, 0(t3)        		# t4 = TABLA[i]
+    lw t4, 0(t3)        		# t4 = TABLA[i], se usa lw para que lea 4 bytes pq .word ocupa 4 bytes
 
     # Comparar con X
     ble t4, s2, menor_igual  # Si TABLA[i] <= X, saltar
